@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+	</head>
+	<body>
+		<p>welcome, yzkk!</p>
+		<form onsubmit="return loadXMLDoc(this.msg)">
+			<textarea type="text" cols=55 rows=4 name="msg" id="textarea"></textarea><br>
+			<input type="submit" value="test">
+		</form>
+		<div id="show">
+			<p>succeed!</p>
+			<p>fail?</p>
+		</div>
+		<script>			
+			function createPara() {
+				var allPara = document.getElementsByTagName("p");
+				var para = document.createElement("p");
+				para.innerHTML = "aha";
+				para.setAttribute("id","new");
+				var element = document.getElementById("show");
+				element.insertBefore(para, allPara[1]);
+			}
+			function loadXMLDoc(msg) {
+				createPara();
+				xmlhttp = new XMLHttpRequest();
+				xmlhttp.onreadystatechange = function() {
+					if (xmlhttp.readyState==4 && xmlhttp.status==200) {
+						document.getElementById("new").innerHTML = msg.value;
+						document.getElementById("new").setAttribute("id", "old");
+						msg.value = "";
+					}
+				};
+				xmlhttp.open("POST", "/update", true);
+				xmlhttp.send();
+				return false;
+			}
+		</script>
+	</body>
+</html>
