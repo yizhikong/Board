@@ -18,7 +18,7 @@ function start(log, res, postData) {
 function login(log, response, postData) {
 	username = querystring.parse(postData).username;
 	password = querystring.parse(postData).password;
-	if (username == "yzkk" && password == "yzkk32999,.") {
+	if (username == "yourname" && password == "yourpassword") {
 		var opt = {maxAge : '3000'};
 		response.setHeader('Set-Cookie',
 				cookie.serialize('login', '1', opt));
