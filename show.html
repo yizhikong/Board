@@ -1,39 +1,63 @@
 <!DOCTYPE html>
 <html>
 	<head>
-		<meta http-equiv="Content-Type" content="text/html" charset="UTF-8">
+		<meta http-equiv="Content-Type" content="text/html" charset="utf-8">
 	</head>
 	<body>
-		<p>welcome, yzkk!</p>
+		<p id="test">welcome, yzkk!</p>
 		<form onsubmit="return loadXMLDoc(this.msg)">
 			<textarea type="text" cols=55 rows=4 name="msg" id="textarea"></textarea><br>
-			<input type="submit" value="test">
+			<input type="submit" value="submit">
 		</form>
 		<div id="show">
-			<p>succeed!</p>
-			<p>fail?</p>
+			<div id="end">
+				<h3>------end------</h3>
+			</div>
 		</div>
+		<a href = '/loadAll'>see your all log</a>
 		<script>			
-			function createPara() {
-				var allPara = document.getElementsByTagName("p");
-				var para = document.createElement("p");
-				para.innerHTML = "aha";
-				para.setAttribute("id","new");
+			function createPara(value) {
+				var allDiv = document.getElementsByTagName("div");
+				var newDiv = document.createElement("div");
+
+				var pInDiv = document.createElement("h3");
+				pInDiv.innerHTML = value.weibo;
+				pInDiv.style.width = '900px';
+				//pInDiv.setAttribute("id","new");
+				newDiv.appendChild(pInDiv);
+
+				var time = document.createElement("p");
+				time.innerHTML = value.time;
+				newDiv.appendChild(time);
+
+				var partion = document.createElement("br");
+				newDiv.appendChild(partion);
+
 				var element = document.getElementById("show");
-				element.insertBefore(para, allPara[1]);
+				element.insertBefore(newDiv, allDiv[1]);
 			}
 			function loadXMLDoc(msg) {
-				createPara();
+				var localTime = new Date();
+				localTime = localTime + '';
+				var str = "";
+				for (x in localTime) {
+					if (localTime[x] === 'G') {
+						break;
+					}
+					str = str + localTime[x];
+				}
+				createPara({weibo:msg.value, time:str});
 				xmlhttp = new XMLHttpRequest();
 				xmlhttp.onreadystatechange = function() {
 					if (xmlhttp.readyState==4 && xmlhttp.status==200) {
-						document.getElementById("new").innerHTML = msg.value;
-						document.getElementById("new").setAttribute("id", "old");
 						msg.value = "";
 					}
 				};
-				xmlhttp.open("POST", "/update", true);
-				xmlhttp.send();
+				postData = "weibo=" + msg.value + "&time=" + str;
+				xmlhttp.open("POST", "/submit", true);
+				xmlhttp.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+				xmlhttp.send(postData);
+				msg.value = "";
 				return false;
 			}
 		</script>

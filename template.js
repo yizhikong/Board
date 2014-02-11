@@ -1,4 +1,4 @@
-// Learning from <<deep in plain out -- Node.js>>
+// Learn from <<deep in plain out -- Node.js>>
 function escape(html) {
 	return String(html)
 		.replace(/%(?!\w+;)/g, '&amp;')

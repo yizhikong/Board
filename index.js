@@ -7,4 +7,5 @@ handle["/submit"] = requestHandlers.submit;
 handle["/update"] = requestHandlers.update;
 handle["/login"] = requestHandlers.login;
 handle["/show"] = requestHandlers.show;
+handle["/loadAll"] = requestHandlers.loadAll;
 server.start(router.route, handle);
